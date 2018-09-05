@@ -8,6 +8,14 @@ const options = {
   part: 'snippet'
 };
 
+// clear the div so that it doesn't just keep scrolling content
+
+const emptyDiv = () => {
+  const results = document.getElementsByClassName('results')[0];
+  results.innerHTML = '';
+};
+
+// grab the content from the youtube API
 const getResults = () => {
   let request = new XMLHttpRequest();
 
@@ -24,7 +32,6 @@ const getResults = () => {
         const endLine = document.createElement('br');
         results.appendChild(content);
         results.appendChild(endLine);
-        console.log(`title: "${title}" by channel: ${channel}`);
       }
     } else {
       console.log(this);
