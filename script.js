@@ -24,15 +24,37 @@ const getResults = () => {
     if (this.status === 200) {
       var data = JSON.parse(this.response);
       for (let i = 0; i < 10; i++) {
+        const results = document.getElementsByClassName('results')[0];
+
+        const div = document.createElement('div');
+        div.className = 'resultItem';
+        results.append(div);
+
         const title = data.items[i].snippet.title;
         const channel = data.items[i].snippet.channelTitle;
-        const results = document.getElementsByClassName('results')[0];
-        const content = document.createTextNode(
-          `title: "${title}" by channel: ${channel}\n`
-        );
-        const endLine = document.createElement('br');
-        results.appendChild(content);
-        results.appendChild(endLine);
+        const date = data.items[i].snippet.publishedAt
+          .toString()
+          .substring(0, 9);
+        const thumbnail = data.items[i].snippet.thumbnails.medium.url;
+        console.log(thumbnail);
+
+        const resultItem = document.getElementsByClassName('resultItem')[0];
+
+        const htmlTitle = document.createTextNode(`title: "${title}" `);
+        const htmlChannel = document.createTextNode(`by channel: ${channel} `);
+        const htmlDate = document.createTextNode(`published on: ${date}. `);
+        const img = document.createElement('img');
+        img.src = thumbnail;
+
+        results.append(div);
+        resultItem.appendChild(htmlTitle);
+        resultItem.appendChild(document.createElement('br'));
+        resultItem.appendChild(img);
+        resultItem.appendChild(document.createElement('br'));
+        resultItem.appendChild(htmlChannel);
+        resultItem.appendChild(document.createElement('br'));
+        resultItem.appendChild(htmlDate);
+        resultItem.appendChild(document.createElement('br'));
       }
     } else {
       console.log(this);
@@ -48,6 +70,7 @@ const getResults = () => {
   options.q = searchTerm;
   const sortBy = document.getElementById('sort').value;
   options.order = sortBy;
+
   const REQUEST_URL =
     API_URL +
     'key=' +
