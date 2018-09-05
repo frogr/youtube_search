@@ -1,6 +1,10 @@
 html {
   font-family: 'Raleway', sans-serif;
 }
+h1 {
+  text-decoration: underline;
+  text-decoration-color: green;
+}
 .container {
   width: 40%;
   height: 100%;
@@ -27,4 +31,9 @@ img {
 }
 .sortForm {
   margin: 5px;
+}
+button {
+  color: black;
+  border-radius: 20px;
+  width: 100px;
 }
