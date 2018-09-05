@@ -1,7 +1,13 @@
+html {
+  font-family: 'Raleway', sans-serif;
+}
 .container {
   width: 40%;
   height: 100%;
   margin: 0 auto;
+}
+.text {
+  line-height: 1.5;
 }
 .resultItem,
 form {
@@ -14,4 +20,11 @@ img {
   margin-top: 3%;
   height: 600px;
   overflow: auto;
+}
+.searchForm {
+  margin: 5px;
+  width: 60%;
+}
+.sortForm {
+  margin: 5px;
 }
