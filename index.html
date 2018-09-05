@@ -1,6 +1,8 @@
 <!DOCTYPE html>
   <head>
+    <meta charset="utf-8"/>
     <link rel="stylesheet" href="./style.css">
+    <script type="text/javascript" src="./script.js"></script>
   </head>
   <body>
   <div class="container">
@@ -15,7 +17,7 @@
           </div>
         </div>
         <div class="button">
-             <button id="search" class="searchButton" type="button">search</button>
+             <button id="search" class="searchButton" type="button" onclick="getResults();">search</button>
         </div>
       </div>
     </div>
@@ -25,6 +27,9 @@
         <li> Youtube Video Title </li>
         <li> Youtube Video Title </li>
       </ul>
+    </div>
+    <div id="myDiv">
+      pending
     </div>
   </div>
   </body>
