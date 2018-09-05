@@ -5,7 +5,8 @@ const options = {
   key: KEY,
   q: '',
   maxResults: 10,
-  part: 'snippet'
+  part: 'snippet',
+  order: 'title'
 };
 
 // clear the div so that it doesn't just keep scrolling content
@@ -45,7 +46,8 @@ const getResults = () => {
 
   const searchTerm = document.getElementById('searchTerm').value;
   options.q = searchTerm;
-
+  const sortBy = document.getElementById('sort').value;
+  options.order = sortBy;
   const REQUEST_URL =
     API_URL +
     'key=' +
@@ -58,7 +60,11 @@ const getResults = () => {
     options.part +
     '&' +
     'maxResults=' +
-    options.maxResults;
+    options.maxResults +
+    '&' +
+    'order=' +
+    options.order;
+  console.log(REQUEST_URL);
   request.open('GET', REQUEST_URL, true);
   request.send();
 };
