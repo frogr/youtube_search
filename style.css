@@ -1,5 +1,17 @@
 .container {
   width: 40%;
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
+}
+.resultItem,
+form {
+  text-align: center;
+}
+img {
+  margin-top: 5%;
+}
+.results {
+  margin-top: 3%;
+  height: 600px;
+  overflow: auto;
 }

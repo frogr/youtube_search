@@ -16,7 +16,7 @@ const emptyDiv = () => {
   results.innerHTML = '';
 };
 
-// grab the content from the youtube API
+// grab the content from the youtube API and then inject it into the page
 const getResults = () => {
   let request = new XMLHttpRequest();
 
@@ -40,16 +40,16 @@ const getResults = () => {
 
         const resultItem = document.getElementsByClassName('resultItem')[0];
 
-        const htmlTitle = document.createTextNode(`title: "${title}" `);
-        const htmlChannel = document.createTextNode(`by channel: ${channel} `);
-        const htmlDate = document.createTextNode(`published on: ${date}. `);
+        const htmlTitle = document.createTextNode(`"${title}" `);
+        const htmlChannel = document.createTextNode(`by: ${channel} `);
+        const htmlDate = document.createTextNode(`published: ${date}`);
         const img = document.createElement('img');
         img.src = thumbnail;
 
         results.append(div);
-        resultItem.appendChild(htmlTitle);
-        resultItem.appendChild(document.createElement('br'));
         resultItem.appendChild(img);
+        resultItem.appendChild(document.createElement('br'));
+        resultItem.appendChild(htmlTitle);
         resultItem.appendChild(document.createElement('br'));
         resultItem.appendChild(htmlChannel);
         resultItem.appendChild(document.createElement('br'));
