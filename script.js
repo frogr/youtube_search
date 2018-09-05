@@ -4,7 +4,7 @@ const API_URL = 'https://www.googleapis.com/youtube/v3/search?';
 const options = {
   key: KEY,
   q: '',
-  maxResults: 25,
+  maxResults: 10,
   part: 'snippet'
 };
 
@@ -14,12 +14,17 @@ const getResults = () => {
   request.onload = function() {
     if (this.status === 200) {
       var data = JSON.parse(this.response);
-      for (let i = 0; i <= 24; i++) {
-        console.log(
-          `title: ${data.items[i].snippet.title} by channel: ${
-            data.items[i].snippet.channelTitle
-          }`
+      for (let i = 0; i < 10; i++) {
+        const title = data.items[i].snippet.title;
+        const channel = data.items[i].snippet.channelTitle;
+        const results = document.getElementsByClassName('results')[0];
+        const content = document.createTextNode(
+          `title: "${title}" by channel: ${channel}\n`
         );
+        const endLine = document.createElement('br');
+        results.appendChild(content);
+        results.appendChild(endLine);
+        console.log(`title: "${title}" by channel: ${channel}`);
       }
     } else {
       console.log(this);
