@@ -77,13 +77,13 @@ const getResults = () => {
 const injectData = (i, info) => {
   const results = document.getElementsByClassName('results')[0];
 
-  const li = document.createElement('li');
-  li.className = 'resultItem';
-  results.append(li);
+  const div = document.createElement('div');
+  div.className = 'resultItem';
+  results.append(div);
 
   const title = info[i].snippet.title;
   const channel = info[i].snippet.channelTitle;
-  const date = info[i].snippet.publishedAt.toString().substring(0, 9);
+  const date = info[i].snippet.publishedAt.toString().substring(0, 10);
   const thumbnail = info[i].snippet.thumbnails.medium.url;
 
   const resultItem = document.getElementsByClassName('resultItem')[i];
@@ -99,9 +99,11 @@ const injectData = (i, info) => {
   htmlChannel.appendChild(channelData);
 
   const htmlDate = document.createElement('p');
-  const dateData = document.createTextNode(`published: ${date}`);
+  const oDate = new Date(date);
+  const dateData = document.createTextNode(`published: ${oDate}`);
   htmlDate.className = 'resultDate';
   htmlDate.appendChild(dateData);
+  htmlTitle.appendChild(htmlDate);
 
   const img = document.createElement('img');
   img.src = thumbnail;
@@ -118,6 +120,48 @@ const injectData = (i, info) => {
 };
 
 function sortListDir() {
+  let list,
+    i,
+    switching,
+    b,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  list = document.getElementById('id01');
+  switching = true;
+  dir = 'asc';
+  while (switching) {
+    switching = false;
+    b = document.getElementsByClassName('resultTitle');
+    console.log(b);
+    for (i = 0; i < b.length - 1; i++) {
+      shouldSwitch = false;
+      if (dir == 'asc') {
+        if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == 'desc') {
+        if (b[i].innerHTML.toLowerCase() < b[i + 1].innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      b[i].parentNode.insertBefore(b[i + 1], b[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == 'asc') {
+        dir = 'desc';
+        switching = true;
+      }
+    }
+  }
+}
+
+function sortListDate() {
   let list,
     i,
     switching,

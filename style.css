@@ -37,3 +37,10 @@ button {
   border-radius: 20px;
   width: 100px;
 }
+.helpText {
+  font-size: 12px;
+  color: grey;
+  margin-left: 5px;
+  margin-top: 5px;
+  position: absolute;
+}
