@@ -81,9 +81,7 @@ const injectData = (i, info) => {
   results.append(div);
 
   const title = info[i].snippet.title;
-  const channel = info[i].snippet.channelTitle;
   const date = info[i].snippet.publishedAt.toString().substring(0, 10);
-  const thumbnail = info[i].snippet.thumbnails.medium.url;
 
   const resultItem = document.getElementsByClassName('resultItem')[i];
 
@@ -101,23 +99,9 @@ const injectData = (i, info) => {
 
   resultItem.appendChild(htmlTitle);
   resultItem.appendChild(document.createElement('br'));
-
-  const htmlChannel = document.createElement('p');
-  const channelData = document.createTextNode(`by: ${channel} `);
-  htmlChannel.className = 'resultChannel';
-  htmlChannel.appendChild(channelData);
-
-  const img = document.createElement('img');
-  img.src = thumbnail;
-  // results.append(li);
-  // resultItem.appendChild(img);
-  // resultItem.appendChild(document.createElement('br'));
-  // resultItem.appendChild(htmlChannel);
-  // resultItem.appendChild(document.createElement('br'));
-  // resultItem.appendChild(htmlDate);
-  // resultItem.appendChild(document.createElement('br'));
 };
 
+// checkbox calls this to sort results alphabetically
 function sortListAlph() {
   let i,
     switching,
@@ -158,6 +142,7 @@ function sortListAlph() {
   }
 }
 
+// checkbox calls this to sort by date
 function sortListDate() {
   let i,
     switching,
