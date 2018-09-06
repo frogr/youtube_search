@@ -145,6 +145,7 @@ function sortListAlph() {
       }
     }
     if (shouldSwitch) {
+      document.getElementsByClassName('resultTitle')[i];
       b[i].parentNode.insertBefore(b[i + 1], b[i]);
       switching = true;
       switchcount++;
@@ -178,7 +179,6 @@ function sortListDate() {
 
       shouldSwitch = false;
       if (dir == 'asc') {
-        console.log(b);
         if (b > t) {
           shouldSwitch = true;
           break;
@@ -191,7 +191,8 @@ function sortListDate() {
       }
     }
     if (shouldSwitch) {
-      grabDate.parentNode.insertBefore(t, b);
+      console.log(grabDate[i], grabDate[i + 1]);
+      grabDate[i].parentNode.insertBefore(grabDate[i + 1], grabDate[i]);
       switching = true;
       switchcount++;
     } else {
