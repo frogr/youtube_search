@@ -22,8 +22,21 @@ const getResults = () => {
   request.onload = function() {
     if (this.status === 200) {
       var data = JSON.parse(this.response);
+      const checkbox = document.getElementById('checkbox').checked;
+      const info = data.items;
+      if (checkbox) {
+        info.sort(function(a, b) {
+          console.log(a);
+          let nameA = a.snippet.title.toLowerCase();
+          let nameB = b.snippet.title.toLowerCase();
+          if (nameA < nameB) return -1;
+          if (nameA > nameB) return 1;
+          return 0;
+        });
+      } else {
+      }
       for (let i = 0; i < 10; i++) {
-        injectData(i, data);
+        injectData(i, info);
       }
     } else {
       console.log('failure after connecting');
@@ -61,34 +74,87 @@ const getResults = () => {
 };
 
 // handling the data injection
-const injectData = (i, data) => {
+const injectData = (i, info) => {
   const results = document.getElementsByClassName('results')[0];
 
-  const div = document.createElement('div');
-  div.className = 'resultItem';
-  results.append(div);
+  const li = document.createElement('li');
+  li.className = 'resultItem';
+  results.append(li);
 
-  const title = data.items[i].snippet.title;
-  const channel = data.items[i].snippet.channelTitle;
-  const date = data.items[i].snippet.publishedAt.toString().substring(0, 9);
-  const thumbnail = data.items[i].snippet.thumbnails.medium.url;
-  console.log(thumbnail);
+  const title = info[i].snippet.title;
+  const channel = info[i].snippet.channelTitle;
+  const date = info[i].snippet.publishedAt.toString().substring(0, 9);
+  const thumbnail = info[i].snippet.thumbnails.medium.url;
 
-  const resultItem = document.getElementsByClassName('resultItem')[0];
+  const resultItem = document.getElementsByClassName('resultItem')[i];
 
-  const htmlTitle = document.createTextNode(`"${title}" `);
-  const htmlChannel = document.createTextNode(`by: ${channel} `);
-  const htmlDate = document.createTextNode(`published: ${date}`);
+  const htmlTitle = document.createElement('p');
+  const titleData = document.createTextNode(`"${title}" `);
+  htmlTitle.className = 'resultTitle';
+  htmlTitle.appendChild(titleData);
+
+  const htmlChannel = document.createElement('p');
+  const channelData = document.createTextNode(`by: ${channel} `);
+  htmlChannel.className = 'resultChannel';
+  htmlChannel.appendChild(channelData);
+
+  const htmlDate = document.createElement('p');
+  const dateData = document.createTextNode(`published: ${date}`);
+  htmlDate.className = 'resultDate';
+  htmlDate.appendChild(dateData);
+
   const img = document.createElement('img');
   img.src = thumbnail;
 
-  results.append(div);
-  resultItem.appendChild(img);
-  resultItem.appendChild(document.createElement('br'));
+  // results.append(li);
+  // resultItem.appendChild(img);
+  // resultItem.appendChild(document.createElement('br'));
   resultItem.appendChild(htmlTitle);
   resultItem.appendChild(document.createElement('br'));
-  resultItem.appendChild(htmlChannel);
-  resultItem.appendChild(document.createElement('br'));
-  resultItem.appendChild(htmlDate);
-  resultItem.appendChild(document.createElement('br'));
+  // resultItem.appendChild(htmlChannel);
+  // resultItem.appendChild(document.createElement('br'));
+  // resultItem.appendChild(htmlDate);
+  // resultItem.appendChild(document.createElement('br'));
 };
+
+function sortListDir() {
+  let list,
+    i,
+    switching,
+    b,
+    shouldSwitch,
+    dir,
+    switchcount = 0;
+  list = document.getElementById('id01');
+  switching = true;
+  dir = 'asc';
+  while (switching) {
+    switching = false;
+    b = document.getElementsByClassName('resultTitle');
+    console.log(b);
+    for (i = 0; i < b.length - 1; i++) {
+      shouldSwitch = false;
+      if (dir == 'asc') {
+        if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == 'desc') {
+        if (b[i].innerHTML.toLowerCase() < b[i + 1].innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      b[i].parentNode.insertBefore(b[i + 1], b[i]);
+      switching = true;
+      switchcount++;
+    } else {
+      if (switchcount == 0 && dir == 'asc') {
+        dir = 'desc';
+        switching = true;
+      }
+    }
+  }
+}
