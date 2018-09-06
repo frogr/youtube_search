@@ -26,7 +26,6 @@ const getResults = () => {
       const info = data.items;
       if (checkbox) {
         info.sort(function(a, b) {
-          console.log(a);
           let nameA = a.snippet.title.toLowerCase();
           let nameB = b.snippet.title.toLowerCase();
           if (nameA < nameB) return -1;
@@ -93,47 +92,44 @@ const injectData = (i, info) => {
   htmlTitle.className = 'resultTitle';
   htmlTitle.appendChild(titleData);
 
+  const htmlDate = document.createElement('p');
+  const oDate = new Date(date);
+  const dateData = document.createTextNode(`${oDate}`);
+  htmlDate.className = 'resultDate';
+  htmlDate.appendChild(dateData);
+  htmlTitle.appendChild(htmlDate);
+
+  resultItem.appendChild(htmlTitle);
+  resultItem.appendChild(document.createElement('br'));
+
   const htmlChannel = document.createElement('p');
   const channelData = document.createTextNode(`by: ${channel} `);
   htmlChannel.className = 'resultChannel';
   htmlChannel.appendChild(channelData);
 
-  const htmlDate = document.createElement('p');
-  const oDate = new Date(date);
-  const dateData = document.createTextNode(`published: ${oDate}`);
-  htmlDate.className = 'resultDate';
-  htmlDate.appendChild(dateData);
-  htmlTitle.appendChild(htmlDate);
-
   const img = document.createElement('img');
   img.src = thumbnail;
-
   // results.append(li);
   // resultItem.appendChild(img);
   // resultItem.appendChild(document.createElement('br'));
-  resultItem.appendChild(htmlTitle);
-  resultItem.appendChild(document.createElement('br'));
   // resultItem.appendChild(htmlChannel);
   // resultItem.appendChild(document.createElement('br'));
   // resultItem.appendChild(htmlDate);
   // resultItem.appendChild(document.createElement('br'));
 };
 
-function sortListDir() {
-  let list,
-    i,
+function sortListAlph() {
+  let i,
     switching,
     b,
     shouldSwitch,
     dir,
     switchcount = 0;
-  list = document.getElementById('id01');
   switching = true;
   dir = 'asc';
   while (switching) {
     switching = false;
     b = document.getElementsByClassName('resultTitle');
-    console.log(b);
     for (i = 0; i < b.length - 1; i++) {
       shouldSwitch = false;
       if (dir == 'asc') {
@@ -162,36 +158,40 @@ function sortListDir() {
 }
 
 function sortListDate() {
-  let list,
-    i,
+  let i,
     switching,
     b,
     shouldSwitch,
     dir,
     switchcount = 0;
-  list = document.getElementById('id01');
   switching = true;
   dir = 'asc';
   while (switching) {
     switching = false;
-    b = document.getElementsByClassName('resultTitle');
-    console.log(b);
-    for (i = 0; i < b.length - 1; i++) {
+    grabDate = document.getElementsByClassName('resultDate');
+    for (i = 0; i < grabDate.length - 1; i++) {
+      dateData = grabDate[i].innerHTML;
+      dateData2 = grabDate[i + 1].innerHTML;
+
+      b = new Date(dateData);
+      t = new Date(dateData2);
+
       shouldSwitch = false;
       if (dir == 'asc') {
-        if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+        console.log(b);
+        if (b > t) {
           shouldSwitch = true;
           break;
         }
       } else if (dir == 'desc') {
-        if (b[i].innerHTML.toLowerCase() < b[i + 1].innerHTML.toLowerCase()) {
+        if (b < t) {
           shouldSwitch = true;
           break;
         }
       }
     }
     if (shouldSwitch) {
-      b[i].parentNode.insertBefore(b[i + 1], b[i]);
+      grabDate.parentNode.insertBefore(t, b);
       switching = true;
       switchcount++;
     } else {
