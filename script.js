@@ -145,7 +145,7 @@ function sortListAlph() {
       }
     }
     if (shouldSwitch) {
-      document.getElementsByClassName('resultTitle')[i];
+      console.log(b[i].parentNode);
       b[i].parentNode.insertBefore(b[i + 1], b[i]);
       switching = true;
       switchcount++;
@@ -191,8 +191,10 @@ function sortListDate() {
       }
     }
     if (shouldSwitch) {
-      console.log(grabDate[i], grabDate[i + 1]);
-      grabDate[i].parentNode.insertBefore(grabDate[i + 1], grabDate[i]);
+      grabDate[i].parentNode.parentNode.insertBefore(
+        grabDate[i + 1].parentNode,
+        grabDate[i].parentNode
+      );
       switching = true;
       switchcount++;
     } else {
